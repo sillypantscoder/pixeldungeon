@@ -47,8 +47,8 @@ public abstract class RepaintingPanel extends JPanel {
 				while (true) {
 					frame.revalidate();
 					frame.getContentPane().repaint();
-					frame.setVisible(true);
-					// Thread.sleep(16);
+					// frame.setVisible(true);
+					Thread.sleep(16);
 					// BufferedImage bImg = new BufferedImage(frame.getWidth(), frame.getHeight(), BufferedImage.TYPE_INT_RGB);
 					// Graphics2D cg = bImg.createGraphics();
 					// frame.paintAll(cg);
