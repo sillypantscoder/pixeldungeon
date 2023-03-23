@@ -40,6 +40,28 @@ public class TextureLoader {
 			}
 		}
 	}
+	public static void drawImage(Graphics g, BufferedImage image, int srcX, int srcY, int srcWidth, int srcHeight, int destX, int destY) {
+		try {
+			BufferedImage newImg = image.getSubimage(srcX, srcY, srcWidth, srcHeight);
+			g.drawImage(newImg, destX, destY, new DummyImageObserver());
+		} catch (RasterFormatException e) {
+			System.out.print("ERROR LOADING TEXTURE: ");
+			System.out.print(srcX);
+			System.out.print(", ");
+			System.out.print(srcY);
+			System.out.print(" out of: ");
+			System.out.print(image.getWidth());
+			System.out.print("x");
+			System.out.print(image.getHeight());
+			try {
+				int id = (int)(Math.random() * 10000000);
+				ImageIO.write(image, "png", new File("./errored_image_" + id + ".png"));
+				System.out.println(" (saved as: errored_image_" + id + ".png)");
+			} catch (IOException r) {
+				System.out.println(" (failed saving)");
+			}
+		}
+	}
 	public static void drawImage(Graphics g, BufferedImage image, int srcX, int srcY, int destX, int destY, boolean flipHorizontal) {
 		try {
 			BufferedImage newImg = image.getSubimage(srcX * 16, srcY * 16, 16, 16);

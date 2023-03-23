@@ -2,8 +2,6 @@ package com.sillypantscoder.pixeldungeon.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.IOException;
 
 import com.sillypantscoder.pixeldungeon.Game;
