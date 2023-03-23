@@ -2,6 +2,8 @@ package com.sillypantscoder.pixeldungeon.entities;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.WritableRaster;
 import java.io.IOException;
 
 import com.sillypantscoder.pixeldungeon.Game;
@@ -10,6 +12,7 @@ import com.sillypantscoder.pixeldungeon.TextureLoader;
 public class Player extends Entity {
 	public String rKey;
 	protected BufferedImage image;
+	protected boolean direction;
 	public Player(int x, int y, float time) {
 		super(x, y, time);
 		rKey = null;
@@ -18,9 +21,10 @@ public class Player extends Entity {
 		} catch (IOException e) {
 			System.out.println("Entity failed to load texture!");
 		}
+		direction = false;
 	}
 	public void draw(Graphics g, int[] offset) {
-		TextureLoader.drawImage(g, image, 0, 2, (x * 16) + offset[0], (y * 16) + offset[1]);
+		TextureLoader.drawImage(g, image, 0, 2, (x * 16) + offset[0], (y * 16) + offset[1], !direction);
 	}
 	public void registerKey(String key) {
 		rKey = key;
@@ -44,6 +48,9 @@ public class Player extends Entity {
 				return;
 			}
 			rKey = null;
+			// Switch direction
+			if (this.x < oldX) this.direction = false;
+			else if (oldX < this.x) this.direction = true;
 			// Check if we can walk here
 			if (game.board.board[this.x][this.y].type.walkable()) {
 				this.time += 1;
@@ -53,23 +60,5 @@ public class Player extends Entity {
 			this.x = oldX;
 			this.y = oldY;
 		}
-		/*try {
-			int m = System.in.read();
-			System.in.read();
-			int oldX = this.x;
-			int oldY = this.y;
-			if (m == 119) this.y -= 1; // W
-			if (m == 97)  this.x -= 1; // A
-			if (m == 115) this.y += 1; // S
-			if (m == 100) this.x += 1; // D
-			// Check if we can walk here
-			if (game.board.board[this.x][this.y].type.walkable()) return true;
-			// uh oh!
-			this.x = oldX;
-			this.y = oldY;
-			return false;
-		} catch (IOException e) {
-			return false;
-		}*/
 	}
 }

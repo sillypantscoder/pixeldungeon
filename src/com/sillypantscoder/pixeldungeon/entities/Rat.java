@@ -11,6 +11,7 @@ import com.sillypantscoder.pixeldungeon.TextureLoader;
 
 public class Rat extends Entity {
 	protected BufferedImage image;
+	protected boolean direction;
 	public Rat(int x, int y, float time) {
 		super(x, y, time);
 		try {
@@ -19,6 +20,7 @@ public class Rat extends Entity {
 			System.out.println("Entity failed to load texture!");
 		}
 		target = null;
+		direction = true;
 	}
 	public Entity target;
 	public void draw(Graphics g, int[] offset) {
@@ -33,7 +35,7 @@ public class Rat extends Entity {
 			animationTime = (int)(((float)(animationTime) / 600) * 5);
 			drawX = (new int[] { 6, 7, 8, 9, 10 })[animationTime];
 		}
-		TextureLoader.drawImage(g, image, drawX, 0, (x * 16) + offset[0], (y * 16) + offset[1]);
+		TextureLoader.drawImage(g, image, drawX, 0, (x * 16) + offset[0], (y * 16) + offset[1], !direction);
 	}
 	public void registerKey(String key) {}
 	public void doTurn(Game game) {
@@ -64,8 +66,13 @@ public class Rat extends Entity {
 			time += 1;
 			return;
 		}
+		int oldX = this.x;
 		this.x = path[1][0];
 		this.y = path[1][1];
+		// Switch direction
+		if (this.x < oldX) this.direction = false;
+		else if (oldX < this.x) this.direction = true;
+		// Finish
 		time += 1;
 	}
 }
