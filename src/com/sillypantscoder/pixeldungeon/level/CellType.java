@@ -11,7 +11,7 @@ public enum CellType {
 			CellType.Ground
 		}).anyMatch(this::equals);
 	}
-	public boolean canSee() {
+	public boolean canSeeThrough() {
 		return Arrays.stream(new CellType[] {
 			CellType.Ground,
 			CellType.Chasm

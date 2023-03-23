@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.sillypantscoder.pixeldungeon.DummyImageObserver;
+import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.random;
 
 public class Board {
@@ -26,11 +27,12 @@ public class Board {
 		}
 	}
 	public BufferedImage image;
-	public void draw(Graphics g, int[] offset) {
+	public void draw(Graphics g, int[] offset, Game game) {
 		image = new BufferedImage(board.length * 16, board[0].length * 16, BufferedImage.TYPE_INT_ARGB);
 		Graphics writable = image.getGraphics();
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
+				board[x][y].updateLight(game);
 				BufferedImage newImage = board[x][y].draw();
 				writable.drawImage(newImage, x * 16, y * 16, new DummyImageObserver());
 			}

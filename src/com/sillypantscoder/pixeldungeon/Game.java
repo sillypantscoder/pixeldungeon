@@ -45,10 +45,13 @@ public class Game extends RepaintingPanel {
 		offset[0] = (this.getWidth()  / 2) - ((offset[0] * 16) + 8);
 		offset[1] = (this.getHeight() / 2) - ((offset[1] * 16) + 8);
 		// Draw board
-		board.draw(g, offset);
+		board.draw(g, offset, this);
 		// Draw entities
 		for (int i = 0; i < this.entityList.size(); i++) {
-			this.entityList.get(i).draw(g, offset);
+			Entity e = this.entityList.get(i);
+			if (board.board[e.x][e.y].lightStatus.canSeeEntities()) {
+				e.draw(g, offset);
+			}
 		}
 		// Do turn
 		turn();

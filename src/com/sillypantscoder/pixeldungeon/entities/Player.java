@@ -39,7 +39,10 @@ public class Player extends Entity {
 			else if (rKey.equals("z")) { this.y +=  1; this.x += -1; } // ↙
 			else if (rKey.equals("x")) { this.y +=  1; this.x +=  0; } // ↓
 			else if (rKey.equals("c")) { this.y +=  1; this.x +=  1; } // ↘
-			else System.out.println(rKey);
+			else {
+				System.out.println(rKey);
+				return;
+			}
 			rKey = null;
 			// Check if we can walk here
 			if (game.board.board[this.x][this.y].type.walkable()) {
