@@ -49,8 +49,13 @@ public class Game extends RepaintingPanel {
 		// Draw entities
 		for (int i = 0; i < this.entityList.size(); i++) {
 			Entity e = this.entityList.get(i);
-			if (board.board[e.x][e.y].lightStatus.canSeeEntities()) {
-				e.draw(g, offset);
+			if (e.health < 0) {
+				this.entityList.remove(i);
+				i -= 1;
+			} else {
+				if (board.board[e.x][e.y].lightStatus.canSeeEntities()) {
+					e.draw(g, offset);
+				}
 			}
 		}
 		// Do turn

@@ -11,8 +11,9 @@ public class Player extends Entity {
 	public String rKey;
 	protected BufferedImage image;
 	protected boolean direction;
+	public int attackTime;
 	public Player(int x, int y, float time) {
-		super(x, y, time);
+		super(x, y, time, 25);
 		rKey = null;
 		try {
 			image = TextureLoader.loadAsset("mage2.png");
@@ -20,9 +21,13 @@ public class Player extends Entity {
 			System.out.println("Entity failed to load texture!");
 		}
 		direction = false;
+		attackTime = 0;
 	}
 	public void draw(Graphics g, int[] offset) {
-		TextureLoader.drawImage(g, image, 0, 2, (x * 16) + offset[0], (y * 16) + offset[1], !direction);
+		int drawX = (new int[] { 0, 15, 14, 13 })[(int)(Math.floor(attackTime / 10))];
+		if (attackTime > 0) attackTime -= 1;
+		TextureLoader.drawImage(g, image, drawX, 2, (x * 16) + offset[0], (y * 16) + offset[1], !direction);
+		drawStatuses(g, offset);
 	}
 	public void registerKey(String key) {
 		rKey = key;
@@ -50,6 +55,17 @@ public class Player extends Entity {
 			if (this.x < oldX) this.direction = false;
 			else if (oldX < this.x) this.direction = true;
 			// Check if we can walk here
+			for (int i = 0; i < game.entityList.size(); i++) {
+				Entity e = game.entityList.get(i);
+				if (e == this) continue;
+				if (e.x == this.x && e.y == this.y) {
+					// Attack!
+					this.x = oldX;
+					this.y = oldY;
+					attack(e);
+					return;
+				}
+			}
 			if (game.board.board[this.x][this.y].type.walkable()) {
 				this.time += 1;
 				return;
@@ -58,5 +74,13 @@ public class Player extends Entity {
 			this.x = oldX;
 			this.y = oldY;
 		}
+	}
+	public void attack(Entity e) {
+		attackTime = 30;
+		time += 0.5;
+		int damage = (int)(Math.random() * 6) - 3;
+		damage += 3;
+		e.health -= damage;
+		e.addStatus(String.valueOf(damage));
 	}
 }
