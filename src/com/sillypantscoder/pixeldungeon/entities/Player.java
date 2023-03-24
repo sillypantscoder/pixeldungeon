@@ -5,12 +5,14 @@ import java.io.IOException;
 
 import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
+import com.sillypantscoder.pixeldungeon.items.Inventory;
 
 public class Player extends Entity {
 	public String rKey;
 	protected BufferedImage image;
 	protected boolean direction;
 	public int attackTime;
+	public Inventory inventory;
 	public Player(int x, int y, float time) {
 		super(x, y, time, 25);
 		rKey = null;
@@ -21,6 +23,7 @@ public class Player extends Entity {
 		}
 		direction = false;
 		attackTime = 0;
+		inventory = new Inventory();
 	}
 	public void draw(BufferedImage g, int[] offset) {
 		int drawX = (new int[] { 0, 15, 14, 13 })[(int)(Math.floor(attackTime / 10))];

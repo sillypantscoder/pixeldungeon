@@ -24,10 +24,12 @@ public class Game {
 		// Get offset
 		int[] offset = new int[] { 0, 0 };
 		Entity mainPlayer = getMainPlayer();
-		offset[0] = mainPlayer.x;
-		offset[1] = mainPlayer.y;
-		offset[0] = ( width / 2) - ((offset[0] * 16) + 8);
-		offset[1] = (height / 2) - ((offset[1] * 16) + 8);
+		if (mainPlayer != null) {
+			offset[0] = mainPlayer.x;
+			offset[1] = mainPlayer.y;
+			offset[0] = ( width / 2) - ((offset[0] * 16) + 8);
+			offset[1] = (height / 2) - ((offset[1] * 16) + 8);
+		}
 		// Draw board
 		board.draw(g, offset, this);
 		// Draw entities

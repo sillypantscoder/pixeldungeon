@@ -6,6 +6,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+import com.sillypantscoder.pixeldungeon.entities.Player;
+import com.sillypantscoder.pixeldungeon.items.InventorySlot;
+
 public class GameScreen extends RepaintingPanel {
 	Game game;
 	public GameScreen() {
@@ -36,7 +39,8 @@ public class GameScreen extends RepaintingPanel {
 		int maxHealth = game.getMainPlayer().maxHealth;
 		// Get graphics + height
 		Graphics2D g2d = g.createGraphics();
-		int nextHeight = g2d.getFontMetrics().getHeight();
+		int fontHeight = g2d.getFontMetrics().getHeight();
+		int nextHeight = fontHeight;
 		// Draw text
 		Helpers.drawText(g, "Your health: " + health + "/" + maxHealth + "", 0, nextHeight, 255);
 		// Draw health bar
@@ -44,6 +48,20 @@ public class GameScreen extends RepaintingPanel {
 		g2d.fillRect(0, nextHeight, 200, 20);
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(0, nextHeight, (int)(200 * ((double)(health) / maxHealth)), 20);
+		// Draw inventory
+		InventorySlot[] inventory = ((Player)(game.getMainPlayer())).inventory.slots;
+		nextHeight = nextHeight + fontHeight + 20;
+		Helpers.drawText(g, "Your inventory:", 0, nextHeight, 255);
+		int currentX = 0;
+		for (int i = 0; i < inventory.length; i++) {
+			BufferedImage slotImg = inventory[i].draw();
+			if (currentX + slotImg.getWidth() > 200) {
+				currentX = 0;
+				nextHeight += slotImg.getHeight();
+			}
+			Helpers.blit(g, slotImg, currentX, nextHeight);
+			currentX += slotImg.getWidth();
+		}
 		// Finish
 		g2d.dispose();
 		return g;
