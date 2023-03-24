@@ -1,12 +1,14 @@
 package com.sillypantscoder.pixeldungeon;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,13 +21,15 @@ import javax.swing.SwingWorker;
 public abstract class RepaintingPanel extends JPanel {
 	private static final long serialVersionUID = 7148504528835036003L;
 	protected static JFrame frame;
-	public abstract void painter(Graphics g);
+	public abstract BufferedImage painter();
 	/**
 	* Called by the runtime system whenever the panel needs painting.
 	*/
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		painter(g);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(painter(), 0, 0, new DummyImageObserver());
 		// Paint an oval:
 		//g.setColor(Color.WHITE);
 		//g.fillOval(0, 0, 30, 10); // cx, cy, dx, dy

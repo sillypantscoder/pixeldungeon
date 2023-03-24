@@ -1,11 +1,10 @@
 package com.sillypantscoder.pixeldungeon.level;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.sillypantscoder.pixeldungeon.DummyImageObserver;
 import com.sillypantscoder.pixeldungeon.Game;
+import com.sillypantscoder.pixeldungeon.Helpers;
 import com.sillypantscoder.pixeldungeon.random;
 
 public class Board {
@@ -27,17 +26,18 @@ public class Board {
 		}
 	}
 	public BufferedImage image;
-	public void draw(Graphics g, int[] offset, Game game) {
+	public void draw(BufferedImage g, int[] offset, Game game) {
 		image = new BufferedImage(board.length * 16, board[0].length * 16, BufferedImage.TYPE_INT_ARGB);
-		Graphics writable = image.getGraphics();
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
 				board[x][y].updateLight(game);
 				BufferedImage newImage = board[x][y].draw();
-				writable.drawImage(newImage, x * 16, y * 16, new DummyImageObserver());
+				Helpers.blit(image, newImage, x * 16, y * 16);
+				//image.drawImage(newImage, x * 16, y * 16, new DummyImageObserver());
 			}
 		}
-		g.drawImage(image, offset[0], offset[1], new DummyImageObserver());
+		Helpers.blit(g, image, offset[0], offset[1]);
+		//g.drawImage(image, offset[0], offset[1], new DummyImageObserver());
 	}
 	public int[] getSpawnLocation() {
 		ArrayList<int[]> allowableLocs = new ArrayList<int[]>();

@@ -1,8 +1,8 @@
 package com.sillypantscoder.pixeldungeon;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import com.sillypantscoder.pixeldungeon.entities.Entity;
@@ -33,7 +33,8 @@ public class Game extends RepaintingPanel {
 	}
 	public Board board;
 	public ArrayList<Entity> entityList;
-	public void painter(Graphics g) {
+	public BufferedImage painter() {
+		BufferedImage g = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 		// Get offset
 		int[] offset = new int[] { 0, 0 };
 		for (int i = 0; i < entityList.size(); i++) {
@@ -60,6 +61,8 @@ public class Game extends RepaintingPanel {
 		}
 		// Do turn
 		turn();
+		// Finish drawing
+		return g;
 	}
 	public void turn() {
 		int turn = getTurn();

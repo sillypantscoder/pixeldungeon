@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
@@ -18,10 +17,11 @@ public class TextureLoader {
 		BufferedImage image = ImageIO.read(f);
 		return image;
 	}
-	public static void drawImage(Graphics g, BufferedImage image, int srcX, int srcY, int destX, int destY) {
+	public static void drawImage(BufferedImage g, BufferedImage image, int srcX, int srcY, int destX, int destY) {
 		try {
 			BufferedImage newImg = image.getSubimage(srcX * 16, srcY * 16, 16, 16);
-			g.drawImage(newImg, destX, destY, new DummyImageObserver());
+			Helpers.blit(g, newImg, destX, destY);
+			//g.drawImage(newImg, destX, destY, new DummyImageObserver());
 		} catch (RasterFormatException e) {
 			System.out.print("ERROR LOADING TEXTURE: ");
 			System.out.print(srcX * 16);
@@ -40,15 +40,20 @@ public class TextureLoader {
 			}
 		}
 	}
-	public static void drawImage(Graphics g, BufferedImage image, int srcX, int srcY, int srcWidth, int srcHeight, int destX, int destY) {
+	public static void drawImage(BufferedImage g, BufferedImage image, int srcX, int srcY, int srcWidth, int srcHeight, int destX, int destY) {
 		try {
 			BufferedImage newImg = image.getSubimage(srcX, srcY, srcWidth, srcHeight);
-			g.drawImage(newImg, destX, destY, new DummyImageObserver());
+			Helpers.blit(g, newImg, destX, destY);
+			//g.drawImage(newImg, destX, destY, new DummyImageObserver());
 		} catch (RasterFormatException e) {
 			System.out.print("ERROR LOADING TEXTURE: ");
 			System.out.print(srcX);
 			System.out.print(", ");
 			System.out.print(srcY);
+			System.out.print(" ");
+			System.out.print(srcWidth);
+			System.out.print("x");
+			System.out.print(srcHeight);
 			System.out.print(" out of: ");
 			System.out.print(image.getWidth());
 			System.out.print("x");
@@ -62,11 +67,12 @@ public class TextureLoader {
 			}
 		}
 	}
-	public static void drawImage(Graphics g, BufferedImage image, int srcX, int srcY, int destX, int destY, boolean flipHorizontal) {
+	public static void drawImage(BufferedImage g, BufferedImage image, int srcX, int srcY, int destX, int destY, boolean flipHorizontal) {
 		try {
 			BufferedImage newImg = image.getSubimage(srcX * 16, srcY * 16, 16, 16);
 			if (flipHorizontal) newImg = flipHorizontal(newImg);
-			g.drawImage(newImg, destX, destY, new DummyImageObserver());
+			Helpers.blit(g, newImg, destX, destY);
+			//g.drawImage(newImg, destX, destY, new DummyImageObserver());
 		} catch (RasterFormatException e) {
 			System.out.print("ERROR LOADING TEXTURE: ");
 			System.out.print(srcX * 16);

@@ -1,6 +1,5 @@
 package com.sillypantscoder.pixeldungeon.entities;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -23,7 +22,7 @@ public class Player extends Entity {
 		direction = false;
 		attackTime = 0;
 	}
-	public void draw(Graphics g, int[] offset) {
+	public void draw(BufferedImage g, int[] offset) {
 		int drawX = (new int[] { 0, 15, 14, 13 })[(int)(Math.floor(attackTime / 10))];
 		if (attackTime > 0) attackTime -= 1;
 		TextureLoader.drawImage(g, image, drawX, 2, (x * 16) + offset[0], (y * 16) + offset[1], !direction);

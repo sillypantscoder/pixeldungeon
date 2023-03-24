@@ -1,6 +1,5 @@
 package com.sillypantscoder.pixeldungeon.entities;
 
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.Instant;
@@ -37,7 +36,7 @@ public class Rat extends Entity {
 		hasMoved = false;
 	}
 	public Entity target;
-	public void draw(Graphics g, int[] offset) {
+	public void draw(BufferedImage g, int[] offset) {
 		int drawX = 0;
 		if (attackTime <= 0) {
 			if (!sleeping) {
