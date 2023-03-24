@@ -1,7 +1,7 @@
 package com.sillypantscoder.pixeldungeon;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+// import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-//import javax.swing.SwingUtilities;
+// import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
@@ -27,8 +27,6 @@ public abstract class RepaintingPanel extends JPanel {
 	*/
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(painter(), 0, 0, new DummyImageObserver());
 		// Paint an oval:
 		//g.setColor(Color.WHITE);

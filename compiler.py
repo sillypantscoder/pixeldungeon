@@ -47,7 +47,7 @@ print("Saving...")
 f = open("compiled_output/manifest", "w")
 f.write(f"""Manifest-Version: 1.0
 Created-By: 17.0.3 (GraalVM Community)
-Main-Class: com.sillypantscoder.pixeldungeon.Game
+Main-Class: com.sillypantscoder.pixeldungeon.Main
 
 """)
 f.close()
