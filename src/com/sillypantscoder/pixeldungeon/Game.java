@@ -13,17 +13,19 @@ public class Game {
 	public Game() {
 		this.board = LevelGeneration.generateLevel(50, 10);
 		this.entityList = new ArrayList<Entity>();
+		this.itemList = new ArrayList<DroppedItem>();
 	}
 	public void keyPressed(KeyEvent e) {
 		entityList.get(getTurn()).registerKey(String.valueOf(e.getKeyChar()));
 	}
 	public Board board;
 	public ArrayList<Entity> entityList;
+	public ArrayList<DroppedItem> itemList;
 	public BufferedImage renderGameScreen(int width, int height) {
 		BufferedImage g = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		// Get offset
 		int[] offset = new int[] { 0, 0 };
-		Entity mainPlayer = getMainPlayer();
+		Player mainPlayer = getMainPlayer();
 		if (mainPlayer != null) {
 			offset[0] = mainPlayer.x;
 			offset[1] = mainPlayer.y;
@@ -44,15 +46,30 @@ public class Game {
 				}
 			}
 		}
+		// Draw items
+		for (int i = 0; i < this.itemList.size(); i++) {
+			DroppedItem e = this.itemList.get(i);
+			Player target = e.check(this.entityList);
+			if (target != null) {
+				this.itemList.remove(i);
+				i -= 1;
+				target.inventory.add(e.item);
+				target.time += 1;
+			} else {
+				if (board.board[e.x][e.y].lightStatus.canSeeEntities()) {
+					e.draw(g, offset);
+				}
+			}
+		}
 		// Do turn
 		turn();
 		// Finish drawing
 		return g;
 	}
-	public Entity getMainPlayer() {
+	public Player getMainPlayer() {
 		for (int i = 0; i < entityList.size(); i++) {
 			if (entityList.get(i) instanceof Player) {
-				return entityList.get(i);
+				return (Player)(entityList.get(i));
 			}
 		}
 		return null;

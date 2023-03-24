@@ -16,5 +16,8 @@ public class Main {
 		Player p = new Player(pos[0], pos[1], 0);
 		screen.game.entityList.add(p);
 		p.inventory.add(new FoodRation());
+		// add some items
+		DroppedItem i = new DroppedItem(new FoodRation(), screen.game);
+		screen.game.itemList.add(i);
 	}
 }
