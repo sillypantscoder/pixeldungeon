@@ -7,6 +7,7 @@ import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
 import com.sillypantscoder.pixeldungeon.items.Inventory;
 import com.sillypantscoder.pixeldungeon.particles.AttackParticle;
+import com.sillypantscoder.pixeldungeon.particles.DeathParticle;
 
 public class Player extends Entity {
 	public String rKey;
@@ -87,5 +88,15 @@ public class Player extends Entity {
 		e.addStatus(String.valueOf(damage));
 		// Particles
 		game.particles.add(new AttackParticle(e.x, e.y, this.x, this.y));
+	}
+	@Override
+	public void die(Game game) {
+		game.particles.add(new DeathParticle(this, image, new int[][] {
+			new int[] { 8,  2 },
+			new int[] { 9,  2 },
+			new int[] { 10, 2 },
+			new int[] { 11, 2 },
+			new int[] { 12, 2 }
+		}));
 	}
 }

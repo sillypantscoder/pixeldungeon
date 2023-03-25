@@ -12,7 +12,7 @@ import com.sillypantscoder.pixeldungeon.particles.Particle;
 
 public class Game {
 	public Game() {
-		this.board = LevelGeneration.generateLevel(30, 20);
+		this.board = LevelGeneration.generateLevel(10, 10);
 		this.entityList = new ArrayList<Entity>();
 		this.itemList = new ArrayList<DroppedItem>();
 		this.particles = new ArrayList<Particle>();
@@ -41,6 +41,7 @@ public class Game {
 		for (int i = 0; i < this.entityList.size(); i++) {
 			Entity e = this.entityList.get(i);
 			if (e.health < 0) {
+				e.die(this);
 				this.entityList.remove(i);
 				i -= 1;
 			} else {

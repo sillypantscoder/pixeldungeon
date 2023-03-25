@@ -8,6 +8,7 @@ import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.Pathfinding;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
 import com.sillypantscoder.pixeldungeon.particles.AttackParticle;
+import com.sillypantscoder.pixeldungeon.particles.DeathParticle;
 
 public class Rat extends Entity {
 	protected BufferedImage image;
@@ -144,5 +145,14 @@ public class Rat extends Entity {
 		e.addStatus(String.valueOf(damage));
 		// Particles
 		game.particles.add(new AttackParticle(e.x, e.y, this.x, this.y));
+	}
+	@Override
+	public void die(Game game) {
+		game.particles.add(new DeathParticle(this, image, new int[][] {
+			new int[] { 11, 0 },
+			new int[] { 12, 0 },
+			new int[] { 13, 0 },
+			new int[] { 14, 0 }
+		}));
 	}
 }
