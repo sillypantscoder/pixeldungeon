@@ -34,13 +34,19 @@ public class GameScreen extends RepaintingPanel {
 	}
 	public BufferedImage drawUI(int height) {
 		BufferedImage g = new BufferedImage(200, height, BufferedImage.TYPE_INT_ARGB);
-		// Calculate health
-		int health = game.getMainPlayer().health;
-		int maxHealth = game.getMainPlayer().maxHealth;
 		// Get graphics + height
 		Graphics2D g2d = g.createGraphics();
 		int fontHeight = g2d.getFontMetrics().getHeight();
 		int nextHeight = fontHeight;
+		// Catch death
+		if (game.getMainPlayer() == null) {
+			Helpers.drawText(g, "You died...", 0, nextHeight * 2, 255);
+			g2d.dispose();
+			return g;
+		}
+		// Calculate health
+		int health = game.getMainPlayer().health;
+		int maxHealth = game.getMainPlayer().maxHealth;
 		// Draw text
 		Helpers.drawText(g, "Your health: " + health + "/" + maxHealth + "", 0, nextHeight, 255);
 		// Draw health bar

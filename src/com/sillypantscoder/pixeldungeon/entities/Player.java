@@ -6,6 +6,7 @@ import java.io.IOException;
 import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
 import com.sillypantscoder.pixeldungeon.items.Inventory;
+import com.sillypantscoder.pixeldungeon.particles.AttackParticle;
 
 public class Player extends Entity {
 	public String rKey;
@@ -64,7 +65,7 @@ public class Player extends Entity {
 					// Attack!
 					this.x = oldX;
 					this.y = oldY;
-					attack(e);
+					attack(e, game);
 					return;
 				}
 			}
@@ -77,12 +78,14 @@ public class Player extends Entity {
 			this.y = oldY;
 		}
 	}
-	public void attack(Entity e) {
+	public void attack(Entity e, Game game) {
 		attackTime = 30;
 		time += 0.5;
 		int damage = (int)(Math.random() * 6) - 3;
 		damage += 3;
 		e.health -= damage;
 		e.addStatus(String.valueOf(damage));
+		// Particles
+		game.particles.add(new AttackParticle(e.x, e.y, this.x, this.y));
 	}
 }

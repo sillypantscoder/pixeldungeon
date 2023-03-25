@@ -7,6 +7,7 @@ import java.time.Instant;
 import com.sillypantscoder.pixeldungeon.Game;
 import com.sillypantscoder.pixeldungeon.Pathfinding;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
+import com.sillypantscoder.pixeldungeon.particles.AttackParticle;
 
 public class Rat extends Entity {
 	protected BufferedImage image;
@@ -122,7 +123,7 @@ public class Rat extends Entity {
 				// Attack!
 				this.x = oldX;
 				this.y = oldY;
-				attack(e);
+				attack(e, game);
 				return;
 			}
 		}
@@ -133,7 +134,7 @@ public class Rat extends Entity {
 		// Finish
 		time += 1;
 	}
-	public void attack(Entity e) {
+	public void attack(Entity e, Game game) {
 		hasMoved = false;
 		attackTime = 40;
 		time += 0.5;
@@ -141,5 +142,7 @@ public class Rat extends Entity {
 		damage += 3;
 		e.health -= damage;
 		e.addStatus(String.valueOf(damage));
+		// Particles
+		game.particles.add(new AttackParticle(e.x, e.y, this.x, this.y));
 	}
 }

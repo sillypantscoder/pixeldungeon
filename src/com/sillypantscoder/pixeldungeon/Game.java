@@ -8,12 +8,14 @@ import com.sillypantscoder.pixeldungeon.entities.Entity;
 import com.sillypantscoder.pixeldungeon.entities.Player;
 import com.sillypantscoder.pixeldungeon.level.Board;
 import com.sillypantscoder.pixeldungeon.level.LevelGeneration;
+import com.sillypantscoder.pixeldungeon.particles.Particle;
 
 public class Game {
 	public Game() {
-		this.board = LevelGeneration.generateLevel(50, 10);
+		this.board = LevelGeneration.generateLevel(30, 20);
 		this.entityList = new ArrayList<Entity>();
 		this.itemList = new ArrayList<DroppedItem>();
+		this.particles = new ArrayList<Particle>();
 	}
 	public void keyPressed(KeyEvent e) {
 		entityList.get(getTurn()).registerKey(String.valueOf(e.getKeyChar()));
@@ -21,6 +23,7 @@ public class Game {
 	public Board board;
 	public ArrayList<Entity> entityList;
 	public ArrayList<DroppedItem> itemList;
+	public ArrayList<Particle> particles;
 	public BufferedImage renderGameScreen(int width, int height) {
 		BufferedImage g = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		// Get offset
@@ -59,6 +62,14 @@ public class Game {
 				if (board.board[e.x][e.y].lightStatus.canSeeEntities()) {
 					e.draw(g, offset);
 				}
+			}
+		}
+		// Draw particles
+		for (int i = 0; i < this.particles.size(); i++) {
+			boolean keepGoing = this.particles.get(i).draw(g, offset);
+			if (!keepGoing) {
+				this.particles.remove(i);
+				i -= 1;
 			}
 		}
 		// Do turn
