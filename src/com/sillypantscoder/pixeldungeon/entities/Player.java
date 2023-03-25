@@ -14,6 +14,7 @@ public class Player extends Entity {
 	protected BufferedImage image;
 	protected boolean direction;
 	public int attackTime;
+	public int selectedInvSlot;
 	public Inventory inventory;
 	public Player(int x, int y, float time) {
 		super(x, y, time, 25);
@@ -26,6 +27,7 @@ public class Player extends Entity {
 		direction = false;
 		attackTime = 0;
 		inventory = new Inventory();
+		selectedInvSlot = -1;
 	}
 	public void draw(BufferedImage g, int[] offset) {
 		int drawX = (new int[] { 0, 15, 14, 13 })[(int)(Math.floor(attackTime / 10))];

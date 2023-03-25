@@ -7,8 +7,8 @@ import com.sillypantscoder.pixeldungeon.Helpers;
 import com.sillypantscoder.pixeldungeon.TextureLoader;
 
 public class InventorySlot {
-	BufferedImage slotIcon;
-	Item item;
+	public BufferedImage slotIcon;
+	public Item item;
 	public InventorySlot() {
 		try {
 			slotIcon = TextureLoader.loadAsset("toolbar.png");
