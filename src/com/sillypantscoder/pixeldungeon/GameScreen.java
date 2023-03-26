@@ -35,6 +35,9 @@ public class GameScreen extends RepaintingPanel {
 		g2d.dispose();
 		// Render game screen
 		Helpers.blit(g, game.renderGameScreen(getWidth() - 200, getHeight()), 200, 0);
+		if (hasClicked && new Rectangle(200, 0, getWidth() - 200, getHeight()).contains(clickPos[0], clickPos[1])) {
+			game.mouseClicked(clickPos[0] - 200, clickPos[1]);
+		}
 		// Render UI
 		Helpers.blit(g, drawUI(getHeight()), 0, 0);
 		return g;

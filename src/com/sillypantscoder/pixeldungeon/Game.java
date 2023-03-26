@@ -1,6 +1,7 @@
 package com.sillypantscoder.pixeldungeon;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -16,10 +17,19 @@ public class Game {
 		this.entityList = new ArrayList<Entity>();
 		this.itemList = new ArrayList<DroppedItem>();
 		this.particles = new ArrayList<Particle>();
+		this.prevOffset = new int[] { 0, 0 };
 	}
 	public void keyPressed(KeyEvent e) {
 		entityList.get(getTurn()).registerKey(String.valueOf(e.getKeyChar()));
 	}
+	public void mouseClicked(int cx, int cy) {
+		int x = (cx - prevOffset[0]) / 16;
+		int y = (cy - prevOffset[1]) / 16;
+		Player mainPlayer = getMainPlayer();
+		mainPlayer.target = new int[] { x, y };
+		mainPlayer.hasTarget = true;
+	}
+	protected int[] prevOffset;
 	public Board board;
 	public ArrayList<Entity> entityList;
 	public ArrayList<DroppedItem> itemList;
@@ -35,6 +45,7 @@ public class Game {
 			offset[0] = ( width / 2) - ((offset[0] * 16) + 8);
 			offset[1] = (height / 2) - ((offset[1] * 16) + 8);
 		}
+		prevOffset = new int[] { offset[0], offset[1] };
 		// Draw board
 		board.draw(g, offset, this);
 		// Draw entities
