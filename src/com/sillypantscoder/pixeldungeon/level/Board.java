@@ -13,7 +13,7 @@ public class Board {
 		board = new Cell[10][10];
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
-				board[x][y] = new Cell(random.choice(CellType.values()), x, y);
+				board[x][y] = new Cell(CellType.Ground, x, y);
 			}
 		}
 	}
@@ -21,7 +21,7 @@ public class Board {
 		board = new Cell[width][height];
 		for (int x = 0; x < board.length; x++) {
 			for (int y = 0; y < board[x].length; y++) {
-				board[x][y] = new Cell(random.choice(CellType.values()), x, y);
+				board[x][y] = new Cell(CellType.Ground, x, y);
 			}
 		}
 	}

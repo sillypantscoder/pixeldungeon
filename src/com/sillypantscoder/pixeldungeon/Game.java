@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import com.sillypantscoder.pixeldungeon.entities.Entity;
 import com.sillypantscoder.pixeldungeon.entities.Player;
 import com.sillypantscoder.pixeldungeon.level.Board;
-import com.sillypantscoder.pixeldungeon.level.LevelGeneration;
+import com.sillypantscoder.pixeldungeon.level.gen.*;
 import com.sillypantscoder.pixeldungeon.particles.Particle;
 
 public class Game {
 	public Game() {
-		this.board = LevelGeneration.generateLevel(10, 10);
+		this.board = SubdivisionLevelGeneration.generateLevel();
 		this.entityList = new ArrayList<Entity>();
 		this.itemList = new ArrayList<DroppedItem>();
 		this.particles = new ArrayList<Particle>();

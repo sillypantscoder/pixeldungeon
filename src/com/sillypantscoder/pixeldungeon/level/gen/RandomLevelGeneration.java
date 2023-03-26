@@ -1,8 +1,11 @@
-package com.sillypantscoder.pixeldungeon.level;
+package com.sillypantscoder.pixeldungeon.level.gen;
 
 import com.sillypantscoder.pixeldungeon.random;
+import com.sillypantscoder.pixeldungeon.level.Board;
+import com.sillypantscoder.pixeldungeon.level.Cell;
+import com.sillypantscoder.pixeldungeon.level.CellType;
 
-public class LevelGeneration {
+public class RandomLevelGeneration {
 	public static Board generateLevel(int width, int height) {
 		Board board = new Board(width, height);
 		for (int x = 0; x < board.board.length; x++) {
