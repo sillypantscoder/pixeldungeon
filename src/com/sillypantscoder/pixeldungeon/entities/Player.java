@@ -65,9 +65,9 @@ public class Player extends Entity {
 				return;
 			}
 			int oldX = this.x;
-			int oldY = this.y;
 			this.x = path[1][0];
 			this.y = path[1][1];
+			this.time += 1;
 			// Switch direction
 			if (this.x < oldX) this.direction = false;
 			else if (oldX < this.x) this.direction = true;

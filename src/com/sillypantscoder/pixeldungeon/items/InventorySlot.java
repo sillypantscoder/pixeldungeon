@@ -18,7 +18,8 @@ public class InventorySlot {
 		item = null;
 	}
 	public BufferedImage draw() {
-		BufferedImage image = slotIcon.getSubimage(83, 8, 22, 24);
+		BufferedImage image = new BufferedImage(22, 24, BufferedImage.TYPE_INT_ARGB);
+		Helpers.blit(image, slotIcon.getSubimage(83, 8, 22, 24), 0, 0);
 		if (item != null) {
 			BufferedImage itemImg = item.draw();
 			int drawX = ( image.getWidth() / 2) - ( itemImg.getWidth() / 2);

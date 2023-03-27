@@ -24,7 +24,7 @@ public class SubdivisionLevelGeneration {
 		ArrayList<Rect> rectsToDivide = new ArrayList<Rect>();
 		ArrayList<Rect> resultRects = new ArrayList<Rect>();
 		rectsToDivide.add(new Rect(0, 0, worldSize, worldSize));
-		int minRoomSize = 4;
+		int minRoomSize = 5;
 		// Divide
 		while (rectsToDivide.size() > 0) {
 			ArrayList<Rect> loopRects = (ArrayList<Rect>)(rectsToDivide.clone());
@@ -87,7 +87,7 @@ public class SubdivisionLevelGeneration {
 			// Right
 			for (int y = resultRects.get(i).top() * 2; y < resultRects.get(i).bottom() * 2; y++) board.board[resultRects.get(i).right() * 2][y].type = CellType.Wall;
 			// Add doors
-			int nDoors = 1 + (int)(Math.round(Math.random() * 1));
+			int nDoors = 1 + (int)(Math.round(Math.random() * 2));
 			for (int d = 0; d < nDoors; d++) {
 				int doorSide = (int)(Math.round(Math.random() * 3));
 				int doorX = 0;
@@ -95,26 +95,26 @@ public class SubdivisionLevelGeneration {
 				switch (doorSide) {
 					case 0:
 						// Top
-						doorX = random.randint(resultRects.get(i).left() * 2, resultRects.get(i).right() * 2);
+						doorX = random.randint((resultRects.get(i).left() * 2) + 1, (resultRects.get(i).right() * 2) - 1);
 						doorY = resultRects.get(i).top() * 2;
 						board.board[doorX][doorY].type = CellType.Ground;
 						break;
 					case 1:
 						// Bottom
-						doorX = random.randint(resultRects.get(i).left() * 2, resultRects.get(i).right() * 2);
+						doorX = random.randint((resultRects.get(i).left() * 2) + 1, (resultRects.get(i).right() * 2) - 1);
 						doorY = resultRects.get(i).bottom() * 2;
 						board.board[doorX][doorY].type = CellType.Ground;
 						break;
 					case 2:
 						// Left
 						doorX = resultRects.get(i).left() * 2;
-						doorY = random.randint(resultRects.get(i).top() * 2, resultRects.get(i).bottom() * 2);
+						doorY = random.randint((resultRects.get(i).top() * 2) + 1, (resultRects.get(i).bottom() * 2) - 1);
 						board.board[doorX][doorY].type = CellType.Ground;
 						break;
 					case 3:
 						// Right
 						doorX = resultRects.get(i).right() * 2;
-						doorY = random.randint(resultRects.get(i).top() * 2, resultRects.get(i).bottom() * 2);
+						doorY = random.randint((resultRects.get(i).top() * 2) + 1, (resultRects.get(i).bottom() * 2) - 1);
 						board.board[doorX][doorY].type = CellType.Ground;
 						break;
 				}
